@@ -1,33 +1,51 @@
-#ifndef UNIT_H
-#define UNIT_H
+#ifndef UNIT_H_
+#define UNIT_H_
+
 #include <iostream>
-class unit
+#include <string>
+
+class	unit
 {
 	public:
-		
-		unit(std::string const& n = "",std::string const& t = "",int x = 0,int y = 0,int d = 0,int c = 0,int m = 0);
-		unit(unit const& u);
-		~unit();
-		unit& operator = (unit const& u);
-		unit& operator += (int hp);
-		unit& operator -= (int hp);
-		std::string getName() const;
-		std::string getType() const;
-		int getPosX() const;
-		int getPosY() const;
-		int getDam() const;
-		int getCHP() const;
-		int getMHP() const;
-		
+		unit(void);
+		unit(std::string const &name, std::string const &type, int x, int y, int damage, int hp, int maxHp);
+		unit(unit const &src);
+		virtual ~unit(void);
+
+		unit		&operator+=(int n);
+		unit		&operator-=(int n);
+		unit		&operator=(unit const &rhs);
+
+		void		move(int x, int y);
+		void		die(void);
+		void		attack(unit &target) const;
+
+		int			getIndex(void) const;
+		std::string const &getName(void) const;
+		std::string const &getType(void) const;
+		int			getPosX(void) const;
+		int			getPosY(void) const;
+		int			getDam(void) const;
+		int			getCHP(void) const;
+		int			getMHP(void) const;
+
 	protected:
-		std::string name;
-		std::string type;
-		int posX;
-		int posY;
-		int dam;
-		int cHP;	
-		int mHP;
-		
+		int			_index;
+		std::string _Name;
+		std::string	_type;
+		int			_x;
+		int			_y;
+		int			_damage;
+		int			_hp;
+		int			_maxHp;
+		bool		_die;
+
+	private:
+		static int		index;
+
+		void			print_created(void) const;
 };
-std::ostream& operator<<(std::ostream& os, unit const& unit);
+
+std::ostream	&operator<<(std::ostream &o, unit const &unit);
+
 #endif
